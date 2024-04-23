@@ -1,0 +1,22 @@
+const express = require('express')
+const router= express.Router()
+const stock = require('../../controllers/stockController')
+const {getImage,searchImage, sendImage}=require('../../controllers/imageController')
+const stockValidator=require('../../validators/stockValidator')
+const { errorHandler } = require('../../validators/validatorErrorHandler')
+const { mongooseIdValidator } = require('../../validators/mongoIdValidator')
+const { roleAuth } = require('../../Auth/userAuth')
+const { cacheMiddleware } = require('../../cache/cacheMiddleware')
+const { uploadSingleImage } = require('../../repository/imageRepository')
+//const usuario=require('../controllers/userController')
+
+router.get('/stock/:itemId',stock.getOneSotckItemById)
+router.get('/stock',cacheMiddleware,stock.getItemsByNameAndPrice)
+
+router.put('/worker/stock/:itemId',stockValidator.createNewStockItem,errorHandler,roleAuth('worker'),stock.modifyStockItem)
+router.patch('/worker/stock/:itemId/availability',mongooseIdValidator('itemId'),stockValidator.modifyAvailavility,errorHandler,roleAuth('worker'),stock.modifyAvailability)
+router.post('/worker/stock/create',uploadSingleImage,stockValidator.createNewStockItem,errorHandler,roleAuth('worker'),stock.createNewStockItem) 
+router.delete('/worker/stock/delete/:itemId',mongooseIdValidator('itemId'),errorHandler,roleAuth('worker'),stock.deleteStock) 
+router.get('/worker/stock/images/:imagename',searchImage) 
+//router.get('/holamundo/:image',sendImage,) 
+module.exports=router
