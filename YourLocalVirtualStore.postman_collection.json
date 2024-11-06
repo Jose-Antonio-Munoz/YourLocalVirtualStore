@@ -1,0 +1,1262 @@
+{
+	"info": {
+		"_postman_id": "4cbf8290-e461-4d94-b169-b4f1f0463823",
+		"name": "YourLocalVirtualStore",
+		"description": "Descripción del proyecto:  \nEl proyecto es un servidor construido con Node.js, Express y MongoDB, diseñado siguiendo los principios de la arquitectura REST, para proporcionar una plataforma integral para el registro de usuarios, autenticación, administración de direcciones, administración de contraseñas, compra de productos y herramientas de gestion administrativas. Integra varias funciones que incluyen autenticación basada en JWT, pasarela de pago de PayPal, seguimiento de auditoría, sanitization y validation para garantizar la seguridad y la solidez.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23879882"
+	},
+	"item": [
+		{
+			"name": "user routes",
+			"item": [
+				{
+					"name": "history",
+					"item": [
+						{
+							"name": "/history'",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/user/history",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"user",
+										"history"
+									]
+								},
+								"description": "api end-point que permite a una cuenta con rol usuario recuperar el historial de las transacciones exitosas realizadas"
+							},
+							"response": []
+						}
+					],
+					"description": "api end-point que permite a un usuario registrado ver el historial de compras realizadas"
+				},
+				{
+					"name": "shopping cart routes",
+					"item": [
+						{
+							"name": "/shopingCart/add_item/",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"itemId\":\"66270c74e6dcfcfe06d809ef\",\r\n\"quantity\":4\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/user/shopingCart/add_item/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"user",
+										"shopingCart",
+										"add_item",
+										""
+									]
+								},
+								"description": "api end-point que permite agregar stock items al carrito de compras asociado al usuario, requiere autenticacion"
+							},
+							"response": []
+						},
+						{
+							"name": "/shopingCart",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/user/shopingCart",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"user",
+										"shopingCart"
+									]
+								},
+								"description": "api end-point que permite obtener el shopping cart asociado al usuario, requiere autenticacion"
+							},
+							"response": []
+						},
+						{
+							"name": "/shopingCart/remove/itemId",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/user/shopingCart/remove/:itemId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"user",
+										"shopingCart",
+										"remove",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId",
+											"value": "6616f5b63b43cdc41513d47b",
+											"description": "id del item a eliminar del carrito de compras"
+										}
+									]
+								},
+								"description": "api end-point que permite eliminar un item del shoping cart, requiere autenticacion"
+							},
+							"response": []
+						}
+					],
+					"description": "agrupacion de los end-point que permiten a los usuarios interactuar con el carrito de compras para agregar, eliminar y ver el carrito de compras"
+				},
+				{
+					"name": "user/login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"joanmuar123@gmail.com\",\r\n    \"password\":123456\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"login"
+							]
+						},
+						"description": "api end-point que permite a un usuario obtener un JWT para agregar en el header de los request de los endpoint que requieran autenticarse."
+					},
+					"response": []
+				},
+				{
+					"name": "user/register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"usuario\":\"example username\",\r\n\"name\":\"example name\",\r\n\"email\":\"example@email.com\",\r\n\"phoneNumber\":\"1234567890\",\r\n\"password\":\"examplePassword\",\r\n\"address\":\"exampleAddress\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"register"
+							]
+						},
+						"description": "api end-point que permite a los usarios registrase en la base de datos del servidor para posteriormente poder obtener un JWT para autenticarse en los end-point que lo requieran\n\nrecibe los siguientes parametros:\n\nusuario: string  \nname: string  \nemail: string  \nphoneNumber: number  \npassword: string  \naddress:string"
+					},
+					"response": []
+				},
+				{
+					"name": "user/forgot-password",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"example@email.com\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000//user/forgot-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"",
+								"user",
+								"forgot-password"
+							]
+						},
+						"description": "api end-point para cambiar contrseña olvidada, envia un token al correo electronico si el usuario se encuentra registrado en la base de datos, no requiere autenticacion"
+					},
+					"response": []
+				},
+				{
+					"name": "user/recovery-password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"email\":\"example@email.com\",\r\n\"userToken\":\"example token\",\r\n\"newPassword\":\"example password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/recovery-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"recovery-password"
+							]
+						},
+						"description": "api end-point para recuperar el acceso usando un token generado por en la ruta /user/forgot-password, permitiendo cambiar la contraseña si el email y el token concuerdan en la base de datos"
+					},
+					"response": []
+				},
+				{
+					"name": "user/change-password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"Password\":\"old password\",\r\n\"newPassword\":\"new password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"change-password"
+							]
+						},
+						"description": "api end-point para actualizar la contraseña de un usuario previamente registrado y logeado, requiere autenticacion"
+					},
+					"response": []
+				},
+				{
+					"name": "user/change-address",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"address\":\"avenida siempre viva 123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/change-address",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"change-address"
+							]
+						},
+						"description": "api end-point para cambiar la direccion de envio de las compras, require autenticacion"
+					},
+					"response": []
+				}
+			],
+			"description": "agrupacion de todas las rutas los endpoint que permiten a los usuarios registrarse, logearse y gestionar su cuenta, realizando cambios en su contraseña o direccion y recuperando su contraseña en caso de que la hayan olvidado",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "worker routes",
+			"item": [
+				{
+					"name": "stock routes",
+					"item": [
+						{
+							"name": "/stock/:itemId",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDVlNWFlZGFiZjEyODNhZGY1YTgwOCIsInVzdWFyaW8iOiJqb2FubXVhcjEyMzQ1NjY3Iiwicm9sZSI6IndvcmtlciIsImlhdCI6MTcxMjAwMjAxNywiZXhwIjoxNzEyMDA1NjE3fQ.PtEQUC2A05I9XWGDkZiBZ8OlOUxQQgV6dSY3QeApIpM",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"name\":\"test producto con image 1\",\r\n\"price\":299.4,\r\n\"description\":\"producto de prueba 1234556\",\r\n\"productId\":\"lorem ipsum\",\r\n\"availability\":false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/worker/stock/:itemId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"worker",
+										"stock",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId",
+											"value": "6615a81e2dd70a5ddda0153c",
+											"description": "mongoDB id"
+										}
+									]
+								},
+								"description": "create Stock"
+							},
+							"response": []
+						},
+						{
+							"name": "/:itemId/availability",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"availability\":true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/worker/stock/:itemId/availability",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"worker",
+										"stock",
+										":itemId",
+										"availability"
+									],
+									"variable": [
+										{
+											"key": "itemId",
+											"value": "66155f4dd494aa93c2ff9331"
+										}
+									]
+								},
+								"description": "api end-point para crear modificar un item stock, requiere authentication y el rol worker"
+							},
+							"response": []
+						},
+						{
+							"name": "/stock/create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDVlNWFlZGFiZjEyODNhZGY1YTgwOCIsInVzdWFyaW8iOiJqb2FubXVhcjEyMzQ1NjY3Iiwicm9sZSI6IndvcmtlciIsImlhdCI6MTcxMjAwMjAxNywiZXhwIjoxNzEyMDA1NjE3fQ.PtEQUC2A05I9XWGDkZiBZ8OlOUxQQgV6dSY3QeApIpM",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "test producto con image 1",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "99.0",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "producto de prueba con imagen1",
+											"type": "text"
+										},
+										{
+											"key": "productId",
+											"value": "example product id",
+											"type": "text"
+										},
+										{
+											"key": "availability",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/joanm/Downloads/bcaa-raspberry.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/worker/stock/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"worker",
+										"stock",
+										"create"
+									]
+								},
+								"description": "api end-point para crear stock en la base de datos, requiere authentication y el rol de worker"
+							},
+							"response": []
+						},
+						{
+							"name": "/images/:imagename",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/worker/stock/images/:imagename",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"worker",
+										"stock",
+										"images",
+										":imagename"
+									],
+									"variable": [
+										{
+											"key": "imagename",
+											"value": "",
+											"description": "nombre de la imagen a buscar en el servidor "
+										}
+									]
+								},
+								"description": "api end-point para recuperar imagenes en el servidor"
+							},
+							"response": []
+						},
+						{
+							"name": "/stock/delete/:itemId",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/worker/stock/delete/:itemId",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"worker",
+										"stock",
+										"delete",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId",
+											"value": "",
+											"description": "mongoDB id del stock a eliminar"
+										}
+									]
+								},
+								"description": "api end-point para eliminar items del stock en la base de datos requiere authentication y el rol de worker"
+							},
+							"response": []
+						},
+						{
+							"name": "/stock/:itemId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/stock/:itemId",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"stock",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId",
+											"value": "",
+											"description": "mongoDB del item a recuperar en la base de datos "
+										}
+									]
+								},
+								"description": "api end-point que permite obtener todos los datos de un item de stock en la base de datos"
+							},
+							"response": []
+						},
+						{
+							"name": "/stock?",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/stock?itemName=example name&itemPrice=99",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"stock"
+									],
+									"query": [
+										{
+											"key": "itemName",
+											"value": "example name",
+											"description": "nombre del/los items en stock a buscar en la base de datos, el campo es opcional, pero no puede ser vacio o nulo"
+										},
+										{
+											"key": "itemPrice",
+											"value": "99",
+											"description": "precio para filtrar items en stock en base al valor proporcionado, es opcional pero no puede ser vacio o nulo"
+										}
+									]
+								},
+								"description": "api end-point para buscar items en stock en la base de datos, permite filtrar los resultados en base al nombre y precio"
+							},
+							"response": []
+						}
+					],
+					"description": "un stock representa un elemento a la venta en la tienda\n\nen esta carpeta se agrupan todos los end-point que permiten ver, crear , modificar y eliminar stock items en la base de datos, ademas de recuperar la imagen asociada a cada uno\n\nAn order represents a payment between two or more parties. Use the Orders API to create, update, retrieve, authorize, and capture orders.\n\nUse the `/orders` resource to create, update, retrieve, authorize, and capture orders."
+				},
+				{
+					"name": "deliveries",
+					"item": [
+						{
+							"name": "localhost:3000/deliveries?page&limit",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/worker/deliveries?page&limit",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"worker",
+										"deliveries"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": null,
+											"description": "numero de la pagina a mostrar"
+										},
+										{
+											"key": "limit",
+											"value": null,
+											"description": "numero de elementos a mostrar por pagina"
+										}
+									]
+								},
+								"description": "api end-point que permite recuperar todos los registro de del historial que estan pendientes por entregar, requiere de authentication y el rol de worker, ademas dos parametros, 'page' y 'limit' para paginacion"
+							},
+							"response": []
+						},
+						{
+							"name": "deliveries/:recordId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/worker/deliveries/:recordId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"worker",
+										"deliveries",
+										":recordId"
+									],
+									"variable": [
+										{
+											"key": "recordId",
+											"value": "",
+											"description": "mongoDB id del elemento record a recuperar de la base de datos"
+										}
+									]
+								},
+								"description": "api end-point que permite recuperar un documento en base al id proveido requiere de authentication y el rol de worker"
+							},
+							"response": []
+						},
+						{
+							"name": "deliveries/:recordId",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/worker/deliveries/:recordId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"worker",
+										"deliveries",
+										":recordId"
+									],
+									"variable": [
+										{
+											"key": "recordId",
+											"value": "6627e2a31c72008704757f86",
+											"description": "mongoDB id del elemento especifico de la base de datos para modificar su estado de entrega"
+										}
+									]
+								},
+								"description": "api end-point que permite en base al id proveido, buscar el documento correspondiente en la base de datos para modificar el campo deliveryStatus de 'pending' a 'delivered' y dar por entregado los sotcks items listados en la direccion proporcionada"
+							},
+							"response": []
+						}
+					],
+					"description": "agrupacion de todos los api end-point que permiten ver y modificar el estado de envio de un registro en el historial por parte de los worker"
+				}
+			],
+			"description": "agrupacion de todos lod end-point que permiten a los usuarios con el rol worker ver, agregar modificar y eliminar items en Stock, y ademas obtener informacion sobre los registros de transacciones realizadas con el objetivo de de entregar los items a las direciones de los usuarios que realizaron la compra y ademas, reportar la entrega como completada",
+			"auth": {
+				"type": "jwt",
+				"jwt": [
+					{
+						"key": "secret",
+						"value": "exampleSecret",
+						"type": "string"
+					},
+					{
+						"key": "payload",
+						"value": "{\r\n   \"id\": \"6626ff314a6357030fcf673f\",\r\n  \"usuario\": \"example username3\",\r\n  \"role\": \"worker\",\r\n  \"iat\": 1712678549,\r\n  \"exp\": 1893798509\r\n}",
+						"type": "string"
+					},
+					{
+						"key": "isSecretBase64Encoded",
+						"value": false,
+						"type": "boolean"
+					},
+					{
+						"key": "algorithm",
+						"value": "HS256",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					},
+					{
+						"key": "headerPrefix",
+						"value": "Bearer",
+						"type": "string"
+					},
+					{
+						"key": "queryParamKey",
+						"value": "token",
+						"type": "string"
+					},
+					{
+						"key": "header",
+						"value": "{}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "admin routes",
+			"item": [
+				{
+					"name": "/admin/create-worker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"usuario\":\"example username\",\r\n\"name\":\"example name\",\r\n\"email\":\"example@email.com\",\r\n\"phoneNumber\":\"1234567890\",\r\n\"password\":\"examplePassword\",\r\n\"address\":\"exampleAddress\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/admin/create-worker",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"create-worker"
+							]
+						},
+						"description": "api end-point que permite a una cuenta admin crear un usuario con el rol worker, requiere authentication y el rol de admin"
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/get-workers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/admin/get-workers?page=&limit=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"get-workers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "",
+									"description": "numero de la pagina a mostrar"
+								},
+								{
+									"key": "limit",
+									"value": "",
+									"description": "numero de elementos por pagina a mostrar"
+								}
+							]
+						},
+						"description": "api end-point que permite a un administrador obtener los datos de las cuentas con el rol worker, requiere authentication y el rol de admin"
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/delete/:workerId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"usuario\":\"example username\",\r\n    \"email\": \"example@email.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/admin/delete/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"delete",
+								""
+							]
+						},
+						"description": "api end-point que permite eliminar a una cuenta con el worker conociendo el username y el email requiere authentication y el rol de worker"
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/deliveries?page&limit",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/admin/deliveries?page&limit",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"deliveries"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": null,
+									"description": "numero de la pagina a mostrar"
+								},
+								{
+									"key": "limit",
+									"value": null,
+									"description": "numero de elementos a mostrar por pagina"
+								}
+							]
+						},
+						"description": "api end-point que permite recuperar todos los registro de del historial que estan pendientes por entregar, requiere de authentication y el rol de admin, ademas dos parametros, 'page' y 'limit' para paginacion"
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/deliveries/:recordId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/admin/deliveries/:recordId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"deliveries",
+								":recordId"
+							],
+							"variable": [
+								{
+									"key": "recordId",
+									"value": ""
+								}
+							]
+						},
+						"description": "api end-point que permite recuperar un documento en base al id proveido requiere de authentication y el rol de admin"
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/deliveries/:recordId",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/admin/deliveries/:recordId/pending",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"deliveries",
+								":recordId",
+								"pending"
+							],
+							"variable": [
+								{
+									"key": "recordId",
+									"value": "6627e2161c72008704757f4e",
+									"description": "mongoDB id del elemento especifico de la base de datos para modificar su estado de entrega"
+								}
+							]
+						},
+						"description": "api end-point que permite en base al id proveido, buscar el documento correspondiente en la base de datos para modificar el campo deliveryStatus de 'delivered' a 'pending' en caso de algun error"
+					},
+					"response": []
+				}
+			],
+			"description": "agrupacion de todos los api-end point que permiten a una cuenta con el rol admin ver, crear y eliminar cuentas con el rol worker, ademas permite ver y modificar el estado del envio de un registro en el historial, modificando su estado de enviado a pendiente, en caso de un error",
+			"auth": {
+				"type": "jwt",
+				"jwt": [
+					{
+						"key": "secret",
+						"value": "exampleSecret",
+						"type": "string"
+					},
+					{
+						"key": "payload",
+						"value": "{\r\n    \"id\":\"6626fe250c5906495d1a7ad1\",\r\n    \"usuario\":\"example username2\",\r\n    \"role\":\"admin\",\r\n    \"iat\":1713366117,\r\n  \"exp\":1833369895\r\n}",
+						"type": "string"
+					},
+					{
+						"key": "isSecretBase64Encoded",
+						"value": false,
+						"type": "boolean"
+					},
+					{
+						"key": "algorithm",
+						"value": "HS256",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					},
+					{
+						"key": "headerPrefix",
+						"value": "Bearer",
+						"type": "string"
+					},
+					{
+						"key": "queryParamKey",
+						"value": "token",
+						"type": "string"
+					},
+					{
+						"key": "header",
+						"value": "{}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "services routes",
+			"item": [
+				{
+					"name": "paypal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/paypal",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"paypal"
+							]
+						},
+						"description": "api end-point que permite proceder al pago de los items listados en el shoppingcart mediante la pasarela de pago de paypal, requiere authentication y el rol de usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "payment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "paymentId",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "payerId",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/payment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"payment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "http://localhost:3000/user/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDVkZWZiMzE1Y2ZhZDQ4OGRhYmMzMSIsInVzdWFyaW8iOiJqb2FubXVhcjEyMzQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTE2NjIzNTksImV4cCI6MTcxMTY2NTk1OX0.X8AJt6hIXDnWGpX8uQ-x0qHzuL-ojugMhDarMfsn8fE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "testmail@hotmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "login worker"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "jwt",
+		"jwt": [
+			{
+				"key": "secret",
+				"value": "exampleSecret",
+				"type": "string"
+			},
+			{
+				"key": "payload",
+				"value": "{ \"id\": \"6605defb315cfad488dabc31\",\r\n  \"usuario\": \"example\",\r\n  \"role\": \"user\",\r\n  \"iat\": 1712800295,\r\n  \"exp\": 1812803895\r\n  }",
+				"type": "string"
+			},
+			{
+				"key": "algorithm",
+				"value": "HS256",
+				"type": "string"
+			},
+			{
+				"key": "isSecretBase64Encoded",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "headerPrefix",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "queryParamKey",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "header",
+				"value": "{}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "grant_type",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "tokenType",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "expires_in",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "tokenName",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "token_id",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "timestamp",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "clientId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "clientSecret",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
