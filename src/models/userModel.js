@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
 
-// revisar nombres y las identificaciones >:V
+// revisar nombres
 const usuariosSchema= new mongoose.Schema({
     usuario:{type:String,unique:true,required:true,index:true},
     name:{type:String,require:true},

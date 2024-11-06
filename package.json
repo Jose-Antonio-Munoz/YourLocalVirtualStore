@@ -4,7 +4,8 @@
   "description": "back-end para una tienda local",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node ./src/index.js"
   },
   "author": "José Antonio Muñoz Arrieta",
   "license": "ISC",

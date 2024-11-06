@@ -1,9 +1,9 @@
 const mongoose=require('mongoose')
 require('dotenv').config()
 
-const connectToDB=async()=>{
+const connectToDB=()=>{
     const dbURI=process.env.MONGODBURI
-    await mongoose
+    mongoose
     .connect(dbURI)
     .then(()=>{console.log("conexion establecida con mongoDB atlas")})
     .catch((err)=>{console.log("error conectando con mongoDB atlas", err)})
